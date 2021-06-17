@@ -171,6 +171,20 @@ void bandpass(complex double* y, int n, double low_f, double high_f) {
     }
 }
 
+void shift_higher(complex double* y, int n, int shift_width){
+  complex double *new_y = calloc(sizeof(complex double), n);
+  for (int i = 0; i < n/2; ++i)
+  {
+    new_y[2*i] = y[i];
+  }
+  for (int i = 0; i < n; ++i)
+  {
+    y[i] = new_y[i];
+  }
+  free(new_y);
+
+}
+
 
 int main(int argc, char ** argv) {
   if (argc != 4) {
@@ -201,8 +215,10 @@ int main(int argc, char ** argv) {
     print_complex(wp, Y, n);
     fprintf(wp, "----------------\n");
 
-    bandpass(Y, n, low_f, hight_f);
+    bandpass(Y, n, low_f, high_f);
     // one_tone(Y, n);
+
+    shift_higher(Y, n, 2);
 
     /* IFFT -> Z */
     ifft(Y, X, n);
