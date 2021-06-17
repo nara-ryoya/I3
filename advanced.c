@@ -173,9 +173,9 @@ void bandpass(complex double* y, int n, double low_f, double high_f) {
 
 void shift_higher(complex double* y, int n, int shift_width){
   complex double *new_y = calloc(sizeof(complex double), n);
-  for (int i = 0; i < n/2; ++i)
+  for (int i = 0; i < n/shift_width; ++i)
   {
-    new_y[2*i] = y[i];
+    new_y[shift_width*i] = y[i];
   }
   for (int i = 0; i < n; ++i)
   {
@@ -185,15 +185,34 @@ void shift_higher(complex double* y, int n, int shift_width){
 
 }
 
+void shift_higher_2(complex double* y, int n, int shift_width){
+  complex double *new_y = calloc(sizeof(complex double), n);
+  for (int i = 0; i < n/2; ++i)
+  {
+    new_y[i + n/2] = y[i] * 10;
+  }
+  for (int i = 0; i < n/2; ++i)
+  {
+    y[i] = 0;
+  }
+  for (int i = n/2; i < n; ++i)
+  {
+    y[i] = new_y[i];
+  }
+  free(new_y);
+
+}
+
 
 int main(int argc, char ** argv) {
-  if (argc != 4) {
+  if (argc != 5) {
       perror("line 160");
       return 1;
   }
   double low_f = atof(argv[2]);
   double high_f = atof(argv[3]);
   long n = atol(argv[1]);
+  int shift_width = atoi(argv[4]);
   if (!pow2check(n)) {
     fprintf(stderr, "error : n (%ld) not a power of two\n", n);
     exit(1);
@@ -215,10 +234,11 @@ int main(int argc, char ** argv) {
     print_complex(wp, Y, n);
     fprintf(wp, "----------------\n");
 
+    shift_higher(Y, n, shift_width);
     bandpass(Y, n, low_f, high_f);
     // one_tone(Y, n);
 
-    shift_higher(Y, n, 2);
+    // shift_higher_2(Y, n, 2);
 
     /* IFFT -> Z */
     ifft(Y, X, n);
