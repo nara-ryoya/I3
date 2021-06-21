@@ -171,11 +171,11 @@ void bandpass(complex double* y, int n, double low_f, double high_f) {
     }
 }
 
-void shift_higher(complex double* y, int n, int shift_width){
+void shift_higher(complex double* y, int n, double shift_width){
   complex double *new_y = calloc(sizeof(complex double), n);
-  for (int i = 0; i < n/shift_width; ++i)
+  for (int i = 0; i < n/shift_width && i < n; ++i)
   {
-    new_y[shift_width*i] = y[i];
+    new_y[(int)(shift_width*i)] = y[i];
   }
   for (int i = 0; i < n; ++i)
   {
@@ -211,8 +211,8 @@ int main(int argc, char ** argv) {
   }
   double low_f = atof(argv[2]);
   double high_f = atof(argv[3]);
-  long n = atol(argv[1]);
-  int shift_width = atoi(argv[4]);
+  long n = atoi(argv[1]);
+  double shift_width = atof(argv[4]);
   if (!pow2check(n)) {
     fprintf(stderr, "error : n (%ld) not a power of two\n", n);
     exit(1);

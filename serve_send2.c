@@ -35,7 +35,7 @@ int main(int argc, char **argv) {
     socklen_t len = sizeof(struct sockaddr_in);
     int s = accept(ss, (struct sockaddr *)&client_addr, &len);
 
-    char* cmd = "rec -t raw -b 16 -c 1 -e s -r 44100 -";
+    char* cmd = "rec -t raw -b 16 -c 1 -e s -r 44100 - -q";
     FILE *fp;
 
     if ((fp = popen(cmd, "r")) != NULL) {
