@@ -1,17 +1,3 @@
-/* 
- * fft.c
- * 使い方
- *   ./fft n
- * 
- * 以下を繰り返す:
- *   標準入力から, 16 bit integerをn個読む
- *   FFTする
- *   逆FFTする
- *   標準出力へ出す
- *
- * したがって「ほぼ何もしない」フィルタになる
- *
- */
 #include <assert.h>
 #include <complex.h>
 #include <math.h>

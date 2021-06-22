@@ -1,17 +1,3 @@
-/* 
- * fft.c
- * 使い方
- *   ./fft n
- * 
- * 以下を繰り返す:
- *   標準入力から, 16 bit integerをn個読む
- *   FFTする
- *   逆FFTする
- *   標準出力へ出す
- *
- * したがって「ほぼ何もしない」フィルタになる
- * 
- */
 #include <assert.h>
 #include <complex.h>
 #include <math.h>
@@ -27,9 +13,6 @@ void die(char * s) {
   exit(1);
 }
 
-/* fd から 必ず n バイト読み, bufへ書く.
-   n バイト未満でEOFに達したら, 残りは0で埋める.
-   fd から読み出されたバイト数を返す */
 ssize_t read_n(int fd, ssize_t n, void * buf) {
   ssize_t re = 0;
   while (re < n) {
