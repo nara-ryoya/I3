@@ -9,7 +9,6 @@
 #include <fcntl.h>
 #include <arpa/inet.h>
 
-
 int main(int argc, char **argv) {
     // ./serve_send2 50000
     int N = 1000;
@@ -30,7 +29,6 @@ int main(int argc, char **argv) {
 
 
     listen(ss, 10);
-
     struct sockaddr_in client_addr;
     socklen_t len = sizeof(struct sockaddr_in);
     int s = accept(ss, (struct sockaddr *)&client_addr, &len);
